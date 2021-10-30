@@ -26,7 +26,7 @@ chmod +x bluetoother
 ```
 
 ## Running with keypress in I3
-bindsym #Mod+shift+b exec /path/to/bluetoother 
+bindsym $Mod+shift+b exec /path/to/bluetoother 
 
 ## References
 https://computingforgeeks.com/connect-to-bluetooth-device-from-linux-terminal/
