@@ -13,9 +13,9 @@ scan on
 scan off
 exit
 ```
-2. Edit the script and input your hardware's MAC address
+3. Edit the script and input your hardware's MAC address
 
-3. Run the script
+4. Run the script
 ```bash
 git clone https://github.com/grahamhelton/bluetoother 
 chmod +x bluetoother
