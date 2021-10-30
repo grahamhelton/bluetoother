@@ -1,0 +1,28 @@
+#! /bin/bash
+mac="INSERT YOUR MAC ADDRESS HERE"
+active=$(systemctl is-active bluetooth.service)
+if [[ "$active" == "active" ]]; then
+        echo "Bluetooth service enabled, trying to connect you..."
+else 
+        echo "Bluetooth is not enabled. Running systemctl start bluetooth.service"
+        systemctl start bluetooth.service
+fi
+
+#unblock bluetooth
+rfkill unblock bluetooth 
+# Use bluetoothctl utility to make the connection.
+bluetoothctl remove $mac 1>/dev/null
+bluetoothctl agent KeyboardOnly 1>/dev/null
+bluetoothctl default-agent 1>/dev/null
+bluetoothctl power on 1>/dev/null
+
+# if your mac address is found, connect to it
+if bluetoothctl scan on | grep -q "$mac"; then
+        bluetoothctl pair  $mac 1>/dev/null
+        bluetoothctl trust $mac 1>/dev/null
+        if bluetoothctl connect $mac | grep -q "Connection successful"; then 
+                echo "You're connected!"
+                exit 0
+        fi
+fi
+echo "Could not connect"
